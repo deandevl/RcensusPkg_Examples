@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Rick Dean">
-<meta name="dcterms.date" content="2025-01-21">
+<meta name="dcterms.date" content="2025-02-22">
 
 <title>RcensusPkg Examples</title>
 <style>
@@ -22,6 +22,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+q { quotes: "“" "”" "‘" "’"; }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { line-height: 1.25; }
@@ -59,16 +60,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="README_files/libs/clipboard/clipboard.min.js"></script>
-<script src="README_files/libs/quarto-html/quarto.js"></script>
-<script src="README_files/libs/quarto-html/popper.min.js"></script>
-<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="README_files/libs/quarto-html/anchor.min.js"></script>
-<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="README_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="README_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap-22c2c57537bf7b0b6388d73423d22c46.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -76,8 +77,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="README.md"><i class="bi bi-file-code"></i>Github (GFM)</a></li></ul></div></div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -99,7 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 21, 2025</p>
+      <p class="date">February 22, 2025</p>
     </div>
   </div>
   
@@ -110,7 +111,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+  <li><a href="#example-and-workflow" id="toc-example-and-workflow">Example and workflow</a></li>
+  <li><a href="#installation" id="toc-installation">Installation</a></li>
+  <li><a href="#setup" id="toc-setup">Setup</a></li>
+  <li><a href="#identify-the-dataset-and-variables-related-to-computers" id="toc-identify-the-dataset-and-variables-related-to-computers">Identify the dataset and variables related to <q>computers</q></a></li>
+  <li><a href="#check-the-availability-of-state-geography" id="toc-check-the-availability-of-state-geography">Check the availability of state geography</a></li>
+  <li><a href="#request-the-census-bureau-data" id="toc-request-the-census-bureau-data">Request the Census Bureau data</a></li>
+  <li><a href="#merge-the-data-with-the-tigerline-shapefile-state-geometries" id="toc-merge-the-data-with-the-tigerline-shapefile-state-geometries">Merge the data with the TIGER/Line Shapefile state geometries</a></li>
+  <li><a href="#plot-the-choropleth-maps" id="toc-plot-the-choropleth-maps">Plot the choropleth maps</a></li>
+  </ul>
+</nav>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Accessing the US Census Bureau’s database of survey data and map geometries via their API can be a challenge. The developer is faced with the Bureau’s many <a href="https://www.census.gov/data/developers/data-sets.html">datasets</a> and collection of <a href="https://www.census.gov/programs-surveys/geography/technical-documentation/complete-technical-documentation/tiger-geo-line.html">TIGER/Line Shapefiles</a>. The R package <a href="https://github.com/deandevl/RcensusPkg">RcensusPkg</a> can help by providing specific functions for checking on the availability of geographies, variables, datasets, and dates. In addition, the package provides easy access to the Bureau’s extensive Tiger Line map geometries and for joining the maps with Census Bureau survey data. Presented here is a basic step-by-step work flow in acquiring survey data and producing choropleth maps.</p>
@@ -121,10 +136,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><p>What is the dataset name recognized by the Bureau’s API that contain computer related variables.</p></li>
 <li><p>From the dataset, what are the variable acronyms that address the percentage of computer presence.</p></li>
-<li><p>The years or “vintage” of interest available from the dataset should also be checked. A “404 error, data not found” if the year is not available.</p></li>
-<li><p>A dataset has a “region” or geography for which it was created. We should make sure that the “region” of interest is available from the dataset.</p></li>
+<li><p>The years or <q>vintage</q> of interest available from the dataset should also be checked. A <q>404 error, data not found</q> if the year is not available.</p></li>
+<li><p>A dataset has a <q>region</q> or geography for which it was created. We should make sure that the <q>region</q> of interest is available from the dataset.</p></li>
 <li><p>With names for dataset, variables, region, and year we should be able to make an error free data request.</p></li>
-<li><p>Download the TIGER/Line Shapefile geometries for the “region” and merge it with the data. The result should be a simple feature object ready for plotting.</p></li>
+<li><p>Download the TIGER/Line Shapefile geometries for the <q>region</q> and merge it with the data. The result should be a simple feature object ready for plotting.</p></li>
 <li><p>Create a choropleth map from the simple feature object.</p></li>
 </ol>
 </section>
@@ -154,9 +169,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="identify-the-dataset-and-variables-related-to-computers" class="level2">
-<h2 class="anchored" data-anchor-id="identify-the-dataset-and-variables-related-to-computers">Identify the dataset and variables related to “computers”</h2>
-<p>We are starting from ground zero where we know little about the availability of Census Bureau data as they relate to “computers”. <code>RcensusPkg</code> has consolidated the Bureau’s dataset names into 7 groupings or categories. We can search the categories for a dataset’s label string and access its collection of variables using <code>RcensusPkg::get_variable_names()</code>.</p>
-<p>Start by searching datasets under category “acs1” for the year 2023 and dataset labels containing the phrase “computers”.</p>
+<h2 class="anchored" data-anchor-id="identify-the-dataset-and-variables-related-to-computers">Identify the dataset and variables related to <q>computers</q></h2>
+<p>We are starting from ground zero where we know little about the availability of Census Bureau data as they relate to <q>computers</q>. <code>RcensusPkg</code> has consolidated the Bureau’s dataset names into 7 groupings or categories. We can search the categories for a dataset’s label string and access its collection of variables using <code>RcensusPkg::get_variable_names()</code>.</p>
+<p>Start by searching datasets under category <q>acs1</q> for the year 2023 and dataset labels containing the phrase <q>computers</q>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>variables_2023_dt <span class="ot">&lt;-</span> RcensusPkg<span class="sc">::</span><span class="fu">get_variable_names</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">category =</span> <span class="st">"acs1"</span>,</span>
@@ -168,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Table 1: 2023 Census Bureau ‘computers’ variables</caption>
+<caption>Table 1: 2023 Census Bureau <q>computers</q> variables</caption>
 <colgroup>
 <col style="width: 9%">
 <col style="width: 76%">
@@ -216,13 +231,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>From the first category, “acs1” we have addressed our first three steps:</p>
+<p>From the first category, <q>acs1</q> we have addressed our first three steps:</p>
 <ul>
-<li><p>dataset: “acs/acs1/profile” <a href="https://www.census.gov/data/developers/data-sets/acs-1year.html">Data Profiles</a></p></li>
+<li><p>dataset: <q>acs/acs1/profile</q> <a href="https://www.census.gov/data/developers/data-sets/acs-1year.html">Data Profiles</a></p></li>
 <li><p>vintage: 2023</p></li>
-<li><p>variable acronym: “DP02_0153PE” <em>Percent!!COMPUTERS AND INTERNET USE!!Total households!!With a computer</em></p></li>
+<li><p>variable acronym: <q>DP02_0153PE</q> <em>Percent!!COMPUTERS AND INTERNET USE!!Total households!!With a computer</em></p></li>
 </ul>
-<p>Let us check the availability of variable “DP02_0153PE” for vintage 2013 using <code>RcensusPkg::get_variable_names()</code>:</p>
+<p>Let us check the availability of variable <q>DP02_0153PE</q> for vintage 2013 using <code>RcensusPkg::get_variable_names()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>variables_2013_dt <span class="ot">&lt;-</span> RcensusPkg<span class="sc">::</span><span class="fu">get_variable_names</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">"acs/acs1/profile"</span>,</span>
@@ -230,8 +245,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vintage =</span> <span class="dv">2013</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Our result is 0 observations for <code>variables_2013_dt</code>. Evidently the Census Bureau API’s acronym name has changed and “DP02_0153PE” does not exists for 2013.</p>
-<p>Let’s do another category search for “computers” and 2013:</p>
+<p>Our result is 0 observations for <code>variables_2013_dt</code>. Evidently the Census Bureau API’s acronym name has changed and <q>DP02_0153PE</q> does not exists for 2013.</p>
+<p>Let’s do another category search for <q>computers</q> and 2013:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>variables_2013_dt <span class="ot">&lt;-</span> RcensusPkg<span class="sc">::</span><span class="fu">get_variable_names</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">category =</span> <span class="st">"acs1"</span>,</span>
@@ -239,11 +254,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter_label_str =</span> <span class="st">"computers"</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Fifty rows are returned and there is a “percentage of computers” variable – just a different acronym name of “DP02_0151PE”:</p>
+<p>Fifty rows are returned and there is a <q>percentage of computers</q> variable – just a different acronym name of <q>DP02_0151PE</q>:</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Table 2: 2013 Census Bureau ‘computers’ variables</caption>
+<caption>Table 2: 2013 Census Bureau <q>computers</q> variables</caption>
 <colgroup>
 <col style="width: 9%">
 <col style="width: 76%">
@@ -293,26 +308,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We now have the following:</p>
 <ul>
-<li><p>dataset: “acs/acs1/profile”</p></li>
+<li><p>dataset: <q>acs/acs1/profile</q></p></li>
 <li><p>vintages: 2013, 2023</p></li>
-<li><p>variable acronyms: “DP02_0151PE”(2013), “DP02_0153PE”(2023)</p></li>
+<li><p>variable acronyms: <q>DP02_0151PE</q>(2013), <q>DP02_0153PE</q>(2023)</p></li>
 </ul>
 </section>
 <section id="check-the-availability-of-state-geography" class="level2">
 <h2 class="anchored" data-anchor-id="check-the-availability-of-state-geography">Check the availability of state geography</h2>
 <p>Step 4 checks geography – we need estimates at the state level. To address geography we can use <code>RcensusPkg::get_geography()</code>.</p>
-<p>Get the available geography levels for dataset “acs/acs1/profile” and vintage 2023:</p>
+<p>Get the available geography levels for dataset <q>acs/acs1/profile</q> and vintage 2023:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>geography_dt <span class="ot">&lt;-</span> RcensusPkg<span class="sc">::</span><span class="fu">get_geography</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">"acs/acs1/profile"</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vintage =</span> <span class="dv">2023</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Among the 19 levels returned, “state” is listed:</p>
+<p>Among the 19 levels returned, <q>state</q> is listed:</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
-<caption>Table 3: 2023 Census Bureau geography levels for ‘acs/acs1/profile’</caption>
+<caption>Table 3: 2023 Census Bureau geography levels for <q>acs/acs1/profile</q></caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">name</th>
@@ -367,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">region =</span> <span class="st">"state:*"</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Rename columns, select columns, convert values to numeric, order the rows by “State”:</p>
+<p>Rename columns, select columns, convert values to numeric, order the rows by <q>State</q>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>computers_2013_dt <span class="ot">&lt;-</span> computers_2013_dt <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  data.table<span class="sc">::</span><span class="fu">setnames</span>(</span>
@@ -546,15 +561,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>RplotterPkg<span class="sc">::</span><span class="fu">multi_panel_grid</span>(</span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">layout =</span> layout,</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_width =</span> <span class="dv">20</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_height =</span> <span class="dv">14</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_width =</span> <span class="dv">15</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_height =</span> <span class="dv">12</span>,</span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Computers Present 2013 - 2023"</span>,</span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot_titles =</span> <span class="fu">c</span>(<span class="st">"Year: 2013"</span>,<span class="st">"Year:2023"</span>)</span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="README_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="1728"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="1248"></p>
 <figcaption>Figure 1: Percent of Computers Present in 2013/2023</figcaption>
 </figure>
 </div>

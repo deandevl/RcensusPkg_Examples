@@ -1,11 +1,20 @@
 ---
 title: "RcensusPkg Examples"
-format: 
-  gfm: default
-  html: default
-editor: visual
-date: last-modified
 author: Rick Dean
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-location: body
+    mainfont: Verdana
+    html-q-tags: true
+    tbl-cap-location: top
+    fig-cap-location: bottom
+    fig-height: 9
+    fig-width: 13
+    grid:
+      body-width: 1200px
+editor: source
 ---
 
 ## Introduction
@@ -91,11 +100,11 @@ kableExtra::kable(dt[44:49,])
 
 From the first category, "acs1" we have addressed our first three steps:
 
-- dataset: "acs/acs1/profile" [Data Profiles](https://www.census.gov/data/developers/data-sets/acs-1year.html)
+-   dataset: "acs/acs1/profile" [Data Profiles](https://www.census.gov/data/developers/data-sets/acs-1year.html)
 
-- vintage: 2023
+-   vintage: 2023
 
-- variable acronym: "DP02_0153PE" *Percent!!COMPUTERS AND INTERNET USE!!Total households!!With a computer*
+-   variable acronym: "DP02_0153PE" *Percent!!COMPUTERS AND INTERNET USE!!Total households!!With a computer*
 
 Let us check the availability of variable "DP02_0153PE" for vintage 2013 using `RcensusPkg::get_variable_names()`:
 
@@ -132,11 +141,11 @@ kableExtra::kable(dt[39:44, .(name, label, dataset)])
 
 We now have the following:
 
-- dataset: "acs/acs1/profile"
+-   dataset: "acs/acs1/profile"
 
-- vintages: 2013, 2023
+-   vintages: 2013, 2023
 
-- variable acronyms: "DP02_0151PE"(2013), "DP02_0153PE"(2023)
+-   variable acronyms: "DP02_0151PE"(2013), "DP02_0153PE"(2023)
 
 ## Check the availability of state geography
 
@@ -150,6 +159,7 @@ geography_dt <- RcensusPkg::get_geography(
   vintage = 2023
 )
 ```
+
 Among the 19 levels returned, "state" is listed:
 
 ```{r}
@@ -163,7 +173,7 @@ A similar result is returned for 2013.
 
 ## Request the Census Bureau data
 
-Using `RcensusPkg::get_vintage_data()` we request the percentage of household computers across the states for 2013 and 2023.  As stated in the help for this function, the Census Bureau API data requests require an access key. Sign-up for a key is free and can be obtained [here](https://api.census.gov/data/key_signup.html). The function will check for a global setting of the key via `Sys.getenv("CENSUS_KEY")`. Run `usethis::edit_r_environ()` and edit your .Renviron file with the line: CENSUS_KEY=*your key* to create the global association.
+Using `RcensusPkg::get_vintage_data()` we request the percentage of household computers across the states for 2013 and 2023. As stated in the help for this function, the Census Bureau API data requests require an access key. Sign-up for a key is free and can be obtained [here](https://api.census.gov/data/key_signup.html). The function will check for a global setting of the key via `Sys.getenv("CENSUS_KEY")`. Run `usethis::edit_r_environ()` and edit your .Renviron file with the line: CENSUS_KEY=*your key* to create the global association.
 
 For 2013:
 
@@ -274,13 +284,11 @@ computers_2023_lst <- RcensusPkg::plot_us_data(
 
 ## Plot the choropleth maps
 
-Our final step is to produce choropleth maps where we compare 2013 with 2023.  
+Our final step is to produce choropleth maps where we compare 2013 with 2023.
 
 Using `RplotterPkg::multi_panel_grid()` we can combine the maps into one panel for making a comparison:
 
 ```{r}
-#| fig-width: 18
-#| fig-height: 9
 #| fig-cap: "Figure 1: Percent of Computers Present in 2013/2023"
 
 plot_lst <- list(
@@ -296,10 +304,9 @@ layout <- list(
 
 RplotterPkg::multi_panel_grid(
   layout = layout,
-  cell_width = 20,
-  cell_height = 14,
+  cell_width = 15,
+  cell_height = 12,
   title = "Computers Present 2013 - 2023",
   plot_titles = c("Year: 2013","Year:2023")
 )
 ```
-
